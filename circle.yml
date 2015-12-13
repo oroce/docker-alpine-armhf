@@ -34,6 +34,12 @@ test:
         files:
           - versions/**/options
   post:
-    - if [[ "$CIRCLE_BRANCH" == "release" ]]; then docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASSWORD; fi
-    - if [[ "$CIRCLE_BRANCH" == "release" ]]; then ./build push; fi
-    - if [[ "$CIRCLE_BRANCH" == "release" ]]; then ./build commit; fi
+    - if [[ "$CIRCLE_BRANCH" == "release" ]]; then docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASSWORD; fi:
+        parallel: true
+    - if [[ "$CIRCLE_BRANCH" == "release" ]]; then ./build push; fi:
+        parallel: true
+    - |
+      [[ "$CIRCLE_BRANCH" == "release" ]] && ./build commit:
+        parallel: true
+        files:
+          - versions/**/options
