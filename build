@@ -9,7 +9,7 @@ build() {
 		[ -f builder/qemu/qemu-arm-static ] || \
 			( docker run --name=debian-qemu-user justincormack/debian-qemu-user || true;
 			docker cp debian-qemu-user:/usr/bin/qemu-arm-static builder/qemu/qemu-arm-static;
-			docker rm debian-qemu-user )
+			docker rm debian-qemu-user || true )
 		docker build -t "$BUILDER_IMAGE" builder
 	}
 
