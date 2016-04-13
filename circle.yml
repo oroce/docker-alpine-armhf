@@ -34,7 +34,7 @@ test:
         files:
           - versions/**/options
   post:
-    - if [[ "$CIRCLE_BRANCH" == "release" ]]; then docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASSWORD; fi:
+    - if [[ "$CIRCLE_BRANCH" == "master" ]]; then docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASSWORD; fi:
         parallel: true
     - ./build push:
         parallel: true
